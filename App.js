@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import SplashScreen from "./screens/SplashScreenView";
-import StartMenu from "./screens/StartMenu";
+import StartCarousel from "./screens/StartCarousel";
 import { useEffect, useState } from "react";
 
 export default function App() {
@@ -13,7 +13,7 @@ export default function App() {
     }, 3500);
   });
 
-  return <>{isShowSplash ? <SplashScreen /> : <StartMenu />}</>;
+  return <>{isShowSplash ? <SplashScreen /> : <StartCarousel />}</>;
 
   // return <SplashScreen />;
 }

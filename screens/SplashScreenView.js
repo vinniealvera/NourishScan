@@ -8,7 +8,7 @@ export default function SplashScreen() {
   useEffect(() => {
     Animated.sequence([
       Animated.timing(floatAnim, {
-        toValue: -15,
+        toValue: -25,
         duration: 1500,
         useNativeDriver: true,
       }),
