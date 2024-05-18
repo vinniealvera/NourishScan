@@ -1,11 +1,11 @@
-import { Text, StyleSheet, Image, View } from "react-native";
-import NourishScanLogo_White from "./assets/NourishScanLogo_White.png";
+import { Text, Image, StyleSheet, View } from "react-native";
+import NourishScanLogo_Color from "../assets/NourishScanLogo_Color.png";
 
-export default function SplashScreen() {
+export default function StartMenu() {
   return (
     <View style={styles.container}>
       <View>
-        <Image source={NourishScanLogo_White} style={styles.Image} />
+        <Image source={NourishScanLogo_Color} style={styles.Image} />
         <Text style={styles.Text}>Nourish Scan</Text>
       </View>
     </View>
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#8EB44F",
+    backgroundColor: "white",
   },
   Image: {
     width: 300,
