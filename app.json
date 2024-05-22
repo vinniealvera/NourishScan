@@ -11,7 +11,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/NourishScanLogo_Color.png",
         "backgroundColor": "#ffffff"
       }
     },
