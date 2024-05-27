@@ -4,8 +4,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Keyboard,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from "../assets/icons/Home.svg";
@@ -44,38 +45,61 @@ const CustomTabBarButton = ({ children, onPress }) => {
 };
 
 const Tabs = () => {
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
-        tabBarStyle: [
-          {
-            display: "flex",
-            position: "absolute",
-            alignItems: "center",
-            alignContent: "center",
-            bottom: 25,
-            left: 20,
-            right: 20,
-            backgroundColor: "#8EB44F",
-            borderRadius: 20,
-            height: 70,
-            elevation: 3,
-            shadowColor: "#415224",
-            shadowRadius: 3.5,
-            shadowOpacity: 0.25,
-            shadowOffset: {
-              width: 0,
-              height: 10,
+        tabBarStyle: isKeyboardVisible
+          ? { display: "none" }
+          : {
+              display: "flex",
+              position: "absolute",
+              alignItems: "center",
+              alignContent: "center",
+              bottom: 25,
+              left: 20,
+              right: 20,
+              backgroundColor: "#8EB44F",
+              borderRadius: 20,
+              height: 70,
+              elevation: 3,
+              shadowColor: "#415224",
+              shadowRadius: 3.5,
+              shadowOpacity: 0.25,
+              shadowOffset: {
+                width: 0,
+                height: 10,
+              },
             },
-          },
-        ],
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View
               style={{ alignItems: "center", justifyContent: "center", top: 3 }}
@@ -90,6 +114,7 @@ const Tabs = () => {
         name="Planner"
         component={PlannerScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View
               style={{ alignItems: "center", justifyContent: "center", top: 3 }}
@@ -104,6 +129,7 @@ const Tabs = () => {
         name="Scanner"
         component={ScannerScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Scanner resizeMode="cover" height={45}></Scanner>
           ),
@@ -116,6 +142,7 @@ const Tabs = () => {
         name="Logbook"
         component={LogbookScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View
               style={{ alignItems: "center", justifyContent: "center", top: 3 }}
@@ -130,6 +157,7 @@ const Tabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <View
               style={{ alignItems: "center", justifyContent: "center", top: 3 }}

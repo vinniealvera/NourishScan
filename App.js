@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./screens/Navbar";
-import Login from './screens/LoginScreen';
+import Login from "./screens/LoginScreen";
 import SignUp from "./screens/SignUpScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import LoginScreen from "./screens/LoginScreen";
@@ -28,16 +28,24 @@ const Stack = createNativeStackNavigator();
 //   // return <SplashScreen />;
 // }
 
+// const App = () => {
+//   return (
+//     <NavigationContainer>
+//       {/* <Tabs /> */}
+//       <Stack.Navigator>
+//         {/* <Stack.Screen options={{headerShown:false}} name="SignUp" component={SignUpScreen} /> */}
+//         {/* <Stack.Screen options={{headerShown:false}} name="Login" component={LoginScreen} /> */}
+//         <Stack.Screen options={{headerShown:false}} name="Forgot" component={ForgotScreen} />
+//         {/* <Stack.Screen options={{headerShown:false}} name="Home" component={HomeScreen} /> */}
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// };
+
 const App = () => {
   return (
     <NavigationContainer>
-      {/* <Tabs /> */}
-      <Stack.Navigator>
-        {/* <Stack.Screen options={{headerShown:false}} name="SignUp" component={SignUpScreen} /> */}
-        {/* <Stack.Screen options={{headerShown:false}} name="Login" component={LoginScreen} /> */}
-        <Stack.Screen options={{headerShown:false}} name="Forgot" component={ForgotScreen} />
-        {/* <Stack.Screen options={{headerShown:false}} name="Home" component={HomeScreen} /> */}
-      </Stack.Navigator>
+      <Tabs />
     </NavigationContainer>
   );
 };
