@@ -5,6 +5,7 @@ import {
   FlatList,
   Animated,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 // import NourishScanLogo_Color from "../assets/NourishScanLogo_Color.png";
 import React, { useState, useRef } from "react";
@@ -13,7 +14,7 @@ import CarouselSlides from "./CarouselComponents/CarouselSlides";
 import CarouselItem from "./CarouselComponents/CarouselItem";
 import Paginator from "./CarouselComponents/Paginator";
 
-export default function StartCarousel() {
+export default function StartCarousel(props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -59,18 +60,21 @@ export default function StartCarousel() {
         <Paginator data={CarouselSlides} scrollX={scrollX} />
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
-        <Pressable style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => props.navigation.navigate("SignUp")}
+        >
           <Text style={styles.textBtn}>GET STARTED</Text>
-        </Pressable>
+        </TouchableOpacity>
         <View style={{ flexDirection: "row" }}>
           <Text style={{ fontSize: 17 }}>Already have an account? </Text>
-          <Pressable>
+          <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
             <Text
               style={{ fontSize: 17, fontWeight: "bold", color: "#91C788" }}
             >
               Log In
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

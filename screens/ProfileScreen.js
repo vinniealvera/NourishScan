@@ -134,7 +134,7 @@ export default function ProfileScreen() {
               alignContent: "center",
               alignItems: "center",
               alignSelf: "center",
-              right: 70,
+              right: 55,
               padding: 7,
             }}
           >

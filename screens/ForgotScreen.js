@@ -5,7 +5,7 @@ import NourishScanLogo_Color from "../assets/NourishScanLogo_Color.png";
 import { auth } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 
-const ForgotScreen = () => {
+const ForgotScreen = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -78,13 +78,13 @@ recover your account.</Text>
         </TouchableOpacity>
         <View style={{ flexDirection: "row" }}>
           <Text style={{ fontSize: 17, marginTop: 10}}>Back to </Text>
-          <Pressable>
+          <TouchableOpacity onPress={() => props.navigation.navigate("Login")}>
             <Text
               style={{ fontSize: 17, fontWeight: "bold", marginTop: 10, color: "#91C788" }}
             >
               Log-In Page
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>

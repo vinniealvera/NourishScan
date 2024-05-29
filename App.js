@@ -14,38 +14,56 @@ import ForgotScreen from "./screens/ForgotScreen";
 
 const Stack = createNativeStackNavigator();
 
-// export default function App() {
-//   const [isShowSplash, setIsShowSplash] = useState(true);
-
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setIsShowSplash(false);
-//     }, 3500);
-//   });
-
-//   return <>{isShowSplash ? <SplashScreen /> : <StartCarousel />}</>;
-
-//   // return <SplashScreen />;
-// }
-
 // const App = () => {
 //   return (
 //     <NavigationContainer>
-//       {/* <Tabs /> */}
-//       <Stack.Navigator>
-//         {/* <Stack.Screen options={{headerShown:false}} name="SignUp" component={SignUpScreen} /> */}
-//         {/* <Stack.Screen options={{headerShown:false}} name="Login" component={LoginScreen} /> */}
-//         <Stack.Screen options={{headerShown:false}} name="Forgot" component={ForgotScreen} />
-//         {/* <Stack.Screen options={{headerShown:false}} name="Home" component={HomeScreen} /> */}
-//       </Stack.Navigator>
+//       <Tabs />
 //     </NavigationContainer>
 //   );
 // };
 
 const App = () => {
+  const [isShowSplash, setIsShowSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsShowSplash(false);
+    }, 3500);
+  });
+
+  if (isShowSplash) {
+    return <SplashScreen />;
+  }
+
   return (
     <NavigationContainer>
-      <Tabs />
+      <Stack.Navigator initialRouteName="StartCarousel">
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="StartCarousel"
+          component={StartCarousel}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="SignUp"
+          component={SignUpScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="ForgotPassword"
+          component={ForgotScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Main"
+          component={Tabs}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

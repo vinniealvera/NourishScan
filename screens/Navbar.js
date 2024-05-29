@@ -20,7 +20,6 @@ import PlannerScreen from "./PlannerScreen";
 import ProfileScreen from "./ProfileScreen";
 import ScannerScreen from "./ScannerScreen";
 import LogbookScreen from "./LogbookScreen";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -104,7 +103,7 @@ const Tabs = () => {
             <View
               style={{ alignItems: "center", justifyContent: "center", top: 3 }}
             >
-              <Home tintColor="white" resizeMode="contain" height={23}></Home>
+              <Home fill="white" resizeMode="contain" height={23}></Home>
               <Text style={{ color: "white", fontSize: 13 }}>Home</Text>
             </View>
           ),
@@ -119,7 +118,11 @@ const Tabs = () => {
             <View
               style={{ alignItems: "center", justifyContent: "center", top: 3 }}
             >
-              <Planner fill="white" resizeMode="contain" height={23}></Planner>
+              <Planner
+                style={{ color: "white" }}
+                resizeMode="contain"
+                height={23}
+              ></Planner>
               <Text style={{ color: "white", fontSize: 13 }}>Planner</Text>
             </View>
           ),
