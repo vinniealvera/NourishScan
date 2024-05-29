@@ -42,7 +42,9 @@ export default function ProfileScreen() {
     });
 
     if (!result.cancelled) {
-      setSelectedImage({ uri: result.uri });
+      const uri = result.assets[0].uri;
+      setSelectedImage({ uri });
+      console.log({ uri });
     }
   };
 
