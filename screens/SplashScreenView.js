@@ -47,5 +47,6 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontSize: 35,
+    fontWeight: "bold",
   },
 });

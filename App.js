@@ -11,18 +11,12 @@ import SignUp from "./screens/SignUpScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import LoginScreen from "./screens/LoginScreen";
 import ForgotScreen from "./screens/ForgotScreen";
+import ScannerScreen from "./screens/ScannerScreen";
 
 const Stack = createNativeStackNavigator();
 
-// const App = () => {
-//   return (
-//     <NavigationContainer>
-//       <Tabs />
-//     </NavigationContainer>
-//   );
-// };
-
 const App = () => {
+  // return <ScannerScreen />;
   const [isShowSplash, setIsShowSplash] = useState(true);
 
   useEffect(() => {
