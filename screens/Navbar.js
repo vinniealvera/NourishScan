@@ -15,6 +15,9 @@ import Scanner from "../assets/icons/Scanner.svg";
 import Logbook from "../assets/icons/Logbook.svg";
 import Profile from "../assets/icons/Profile.svg";
 
+// debugging
+import EntryScreen from "./EntryScreen";
+
 import HomeScreen from "./HomeScreen";
 import PlannerScreen from "./PlannerScreen";
 import ProfileScreen from "./ProfileScreen";
@@ -143,7 +146,7 @@ const Tabs = () => {
       ></Tab.Screen>
       <Tab.Screen
         name="Logbook"
-        component={LogbookScreen}
+        component={EntryScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (

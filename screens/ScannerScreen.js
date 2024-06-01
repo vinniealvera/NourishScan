@@ -6,13 +6,11 @@ import * as ImagePicker from "expo-image-picker";
 
 import NourishScanLogo from "../assets/NourishScanLogo_Color.png";
 import notUploaded from "../assets/Misc/notUploaded.png";
+import foodScanWhite from "../assets/icons/foodScanWhite.png";
 import cameraScan from "../assets/icons/cameraScan.png";
 import warning from "../assets/icons/Warning.png";
 
 export default function ScannerScreen(props) {
-  // change image view
-  const [pictureUploaded, setPictureUploaded] = useState(false);
-
   // image uploader
   const [selectedImage, setSelectedImage] = useState(notUploaded);
 
@@ -68,6 +66,9 @@ export default function ScannerScreen(props) {
         {/* upload image touchable */}
         <TouchableOpacity onPress={pickImage}>
           <Image source={selectedImage} style={styles.upload}></Image>
+          {selectedImage !== notUploaded && (
+            <Image source={foodScanWhite} style={styles.uploadOverlay} />
+          )}
         </TouchableOpacity>
 
         {/* camera button */}
@@ -129,6 +130,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
 
+  uploadOverlay: {
+    position: "absolute",
+    alignSelf: "center",
+    marginTop: 118,
+    opacity: 0.3,
+  },
+
   textHeader: {
     fontWeight: "bold",
     fontSize: 40,
@@ -161,8 +169,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-
-  toastImage: {},
 
   toastText: {
     marginHorizontal: 5,
