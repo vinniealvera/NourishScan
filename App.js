@@ -12,22 +12,22 @@ import SignUpScreen from "./screens/SignUpScreen";
 import LoginScreen from "./screens/LoginScreen";
 import ForgotScreen from "./screens/ForgotScreen";
 import ScannerScreen from "./screens/ScannerScreen";
+import EntryScreen from "./screens/EntryScreen";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  // return <ScannerScreen />;
   const [isShowSplash, setIsShowSplash] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsShowSplash(false);
-    }, 3500);
-  });
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsShowSplash(false);
+  //   }, 3500);
+  // });
 
-  if (isShowSplash) {
-    return <SplashScreen />;
-  }
+  // if (isShowSplash) {
+  //   return <SplashScreen />;
+  // }
 
   return (
     <NavigationContainer>
@@ -59,6 +59,9 @@ const App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
+
+    // for debugging
+    // <EntryScreen></EntryScreen>
   );
 };
 

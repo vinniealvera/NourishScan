@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# Coded By Kuduxaaa
-
 
 class Config(object):
     DEBUG = False
