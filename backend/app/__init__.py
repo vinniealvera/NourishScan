@@ -1,68 +1,62 @@
-# -*- coding: utf-8 -*-
-# Coded By Kuduxaaa
-
 import os
 import config
-
 from flask import (
-    Flask, 
+    Flask,
+    Blueprint,
+
     request,
-    render_template,
-    send_from_directory,
-    abort
+    Response,
+    url_for,
+    json,
+    jsonify
 )
+
 from sqlalchemy import create_engine, update
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from flask_restful import Api
-from sqlalchemy.exc import PendingRollbackError, IntegrityError
+from sqlalchemy.orm import sessionmaker, declarative_base
+from io import (
+    FileIO,
+    IOBase
+)
+
+import uuid, time, datetime
+from flask_caching import Cache
 
 
 DB_PORT = 3306
 DB_HOST = 'localhost'
 DB_USER = 'root'
-#isi password mysql
 DB_PASS = ''
-#buat database nourishscan
 DB_NAME = 'nourishscan'
 
-app = Flask(__name__, 
-            template_folder='views',
-            static_folder='public')
-
-app.config.from_object(config.DevelopmentConfig)
-
-api_router = Api(app, prefix='/api/v1')  # API Initialization
-
 SQLALCHEMY_DATABASE_URI = f'mysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
 Session = sessionmaker(bind=engine)
-
 session = Session()
+    
 Base = declarative_base()
-Base.metadata.create_all(engine)
+
+app = Flask(__name__)
+app.config.from_object(config.DevelopmentConfig)
+app.config["DEBUG"] = True
+app.config["PROFILE_PICTURE_PATH"] = \
+f"{os.getcwd()}/app/static/profile_pictures"
+app.config["FOOD_IMAGE_PATH"] = f"{os.getcwd()}\\app\\static\\food_images"
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-"""
-404 Page not found error default handler
-"""
-@app.errorhandler(404)
-def page_not_found(e):
-    return "Error"
+cache = Cache()
+cache.init_app(app, config={'CACHE_TYPE': 'SimpleCache'})
 
 
+# IMPORTING ROUTES FOR BLUEPRINT MUST BE AT THE BOTTOM
+# OR YOU'LL GET THIS SHIT = NameError: name 'Base' is not defined
 
-"""
-Controllers and API Resources import
-and register blueprints and resources 
-"""
+from app.routes import (
+    predict,
+    userlog
+)
+app.register_blueprint(predict.bp)
+app.register_blueprint(userlog.bp)
+        
 
-from app.controllers import main
-from app.api import resources  
-
-api_router.add_resource(resources.Example, '/')
-
-# Register Blueprints
-app.register_blueprint(main.bp)
