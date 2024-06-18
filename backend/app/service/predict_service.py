@@ -15,10 +15,10 @@ def predict_result(Image, user):
     Food = get_food(output)
   
     if isinstance(output, Exception) or (output == "" or output == " "):
-        return {"msg" : "Cannot Detected Image"}
+        return False
 
     if Food == None :
-        return {"msg" : "Cannot Detected Image"}
+        return False
             
     new_user_log = UserHistory(Food, retrieve_user(user))
     session.add(new_user_log)

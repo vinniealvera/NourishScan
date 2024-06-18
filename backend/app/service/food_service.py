@@ -1,4 +1,5 @@
 from . import *
+import random
 import google.generativeai as genai
 
 def get_food(name):
@@ -67,3 +68,32 @@ def nutrition_facts_data(protein, calories, fat, carbs):
 
     return nutrients
 
+def food_list() :
+    rg = session.query(Food).count()
+    lists = []
+    randoms = unique_rand(1, rg, 2)
+    for i in randoms :
+        food = session.query(Food).filter_by(id=i).first()
+        result = dict()
+        result['name'] = food.name
+        result['calories'] = food.nutrition_facts.calories
+        result['image'] = food.images
+        lists.append(result)
+
+    return lists
+
+    
+
+def unique_rand(inicial, limit, total):
+
+        data = []
+
+        i = 0
+
+        while i < total:
+            number = random.randint(inicial, limit)
+            if number not in data:
+                data.append(number)
+                i += 1
+
+        return data

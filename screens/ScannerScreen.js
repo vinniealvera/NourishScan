@@ -3,20 +3,24 @@ import React, { useState } from "react";
 
 import Camera from "../assets/icons/camera1-f-svgrepo-com.svg";
 import * as ImagePicker from "expo-image-picker";
-
+import * as FS from "expo-file-system";
+import axios from 'axios'
 import NourishScanLogo from "../assets/NourishScanLogo_Color.png";
 import notUploaded from "../assets/Misc/notUploaded.png";
 import foodScanWhite from "../assets/icons/foodScanWhite.png";
 import cameraScan from "../assets/icons/cameraScan.png";
 import warning from "../assets/icons/Warning.png";
+import { useNavigation } from "@react-navigation/native";
+import {ip} from "../App"
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 export default function ScannerScreen(props) {
   // image uploader
   const [selectedImage, setSelectedImage] = useState(notUploaded);
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
+    
     if (status !== "granted") {
       alert("Permission to access camera roll is required!");
       return;
@@ -26,19 +30,54 @@ export default function ScannerScreen(props) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 1
     });
 
+    
+
+
     if (!result.cancelled) {
-      const uri = result.assets[0].uri;
-      setSelectedImage({ uri });
-      console.log({ uri });
+   
+      uploadImage(result)
+      setTimeout(() => {
+        props.navigation.navigate("Entry");
+      }, 800);
+
     }
   };
 
-  // toggle toast
-  const [foodRecognized, setFoodRecognized] = useState(false);
+  const [foodRecognized, setFoodRecognized] = useState(null);
 
+  const uploadImage = async (file) => {
+    const url = ip.concat("predict/upload");
+  
+    const fileToUpload = file.assets[0];
+
+    const base64Response = await fetch(fileToUpload.uri);
+    const blob = await base64Response.blob();
+    const reader = new FileReader();
+    
+    reader.readAsDataURL(blob);
+    reader.onloadend = async () => {
+        const base64data = reader.result;
+        
+        try {
+            const response = await axios.post(url, { data: base64data }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+        } catch (error) {
+
+            setFoodRecognized(false)
+          
+        }
+    };
+};
+  
+    
+    
   return (
     <View style={styles.container}>
       <Image source={NourishScanLogo} style={styles.logo} />
@@ -81,6 +120,7 @@ export default function ScannerScreen(props) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

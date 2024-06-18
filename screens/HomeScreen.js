@@ -1,24 +1,95 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native'
+import React, { Component, useEffect, useState } from 'react'
+import {ip} from "../App"
 import Background from "./BackgroundHome";
 import blankProfile from "../assets/blankProfile.webp";
 import article from "../assets/home/Group 1.png";
 import Meal1 from "../assets/home/meal1.png";
 import Meal2 from "../assets/home/meal2.png";
 import Meal3 from "../assets/home/meal3.png";
+import axios from 'axios'
+import App from '../App';
+
+
+const Graph = ({props, value}) => {
+
+  const heightValue = value < 20 ? value + 20 : 40;
+
+  return(
+
+  <View style={{
+    flexDirection : 'column-reverse',
+
+    alignItems : 'center',
+    alignContent : 'center',
+    rowGap : 6,
+
+    height : 63
+    }}>
+  <Text style={{ fontSize: 11, color: "white"}}>
+  {props}
+  </Text>
+  <View style={{width : 15, height : heightValue, backgroundColor : "#F6EFDD",borderRadius : 8}}></View>
+  </View>
+)}
 
 const HomeScreen = () => {
+  const [suggestion, setSuggestion] = useState([])
+  const [stats, setStats] = useState([])
+
+  const Item = ({ item }) => (
+    <View style={styles.item}>
+      <Image
+        source={{ uri: item.image }}
+        style={styles.image}
+      />
+      <Text style={{
+                marginTop : 8,
+              fontSize: 10,
+              color: "black",
+              textAlign : "center"
+              
+              }}>
+        {item.name}
+      </Text>
+      <Text  style={{
+              fontSize: 10,
+              color: "#EF6160",
+              textAlign : "center"
+                
+              }}>
+        {item.calories} calories
+      </Text>
+    </View>
+  );
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const host = ip.concat("food");
+      const graphhost = ip.concat("history/statistics")
+      try {
+        const response = await axios.get(host);
+        const graphresponse = await axios.get(graphhost)
+        setStats(graphresponse.data)
+        setSuggestion(response.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error); // Log any errors
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
-      <Background style={{flex: 1}} behavior= "padding">
-        <ScrollView
-          style={{
-            flex: 1,
-            width: "90%",
-            alignContent: "center",
-            paddingHorizontal: 20,
-          }}
-        >
-          <View style={{alignItems: "center", justifyContent: "center", marginHorizontal: 40, marginVertical: 30, marginLeft: 44}}>
+   
+      <ScrollView
+        style={{
+          flex: 1,
+          width: "100%",
+       
+          paddingVertical: 50,
+        }}>
+          <View style={{height : 850, alignItems : "center", marginHorizontal: 40, marginLeft: 44}}>
             <Image
             source={blankProfile}
             style={{
@@ -135,240 +206,40 @@ const HomeScreen = () => {
 
               <Text style={{fontSize: 17, justifyContent: "center", color: "#DAAF53", fontWeight: "bold"}}>Daily Statistics</Text>
               <View style={[styles.card, styles.shadowProp]}>
-              <View style={{flexDirection: 'row'}}>
-              <View>
-              <Text
-              style={{
-              fontSize: 17,
-              fontWeight: "bold",
-              color: "#F6EFDD",
-              marginLeft: 15,
-              marginRight: 30,
-              width:20,
-              borderRadius: 10,
-              backgroundColor: "#F6EFDD",
-              paddingVertical: 3,
-              marginTop: 15,
-              }}
-              >
-              T
-              </Text>
-              <Text
-              style={{
-              fontSize: 11,
-              color: "white",
-              marginLeft: 4,
-              }}
-              >
-              Proteins
-              </Text>
-              </View>
+              <View style={{flexDirection: 'row', justifyContent : 'space-between'}}>
 
-              <View>
-              <Text
-              style={{
-              fontSize: 17,
-              fontWeight: "bold",
-              color: "#F6EFDD",
-              marginLeft: 8,
-              width:20,
-              borderRadius: 10,
-              backgroundColor: "#F6EFDD",
-              paddingVertical: 7,
-              marginTop: 7,
-              }}
-              >
-              T
-              </Text>
-              <Text
-              style={{
-              fontSize: 11,
-              color: "white",
-              marginLeft: 2,
-              }}
-              >
-              Sugars
-              </Text>
-              </View>
+              <Graph props={"Proteins"} value={stats.protein}/>
+              <Graph props={"Fats"} value={stats.fat}/>
+              <Graph props={"Sugars"} value={stats.sugar}/>
+              <Graph props={"Calories"} value={stats.calories}/>
+              <Graph props={"Carbs"} value={stats.carbs}/>
+             
 
-              <View>
-              <Text
-              style={{
-              fontSize: 17,
-              fontWeight: "bold",
-              color: "#F6EFDD",
-              marginLeft: 15,
-              width:20,
-              borderRadius: 10,
-              backgroundColor: "#F6EFDD",
-              paddingVertical: 10,
-              marginTop: 2,
-              marginLeft: 25
-              }}
-              >
-              T
-              </Text>
-              <Text
-              style={{
-              fontSize: 11,
-              color: "white",
-              marginLeft: 15,
-              }}
-              >
-              Calories
-              </Text>
-              </View>
-
-              <View>
-              <Text
-              style={{
-              fontSize: 17,
-              fontWeight: "bold",
-              color: "#F6EFDD",
-              marginLeft: 15,
-              width:20,
-              borderRadius: 10,
-              backgroundColor: "#F6EFDD",
-              paddingVertical: 9,
-              marginTop: 4,
-              marginLeft: 27
-              }}
-              >
-              T
-              </Text>
-              <Text
-              style={{
-              fontSize: 11,
-              color: "white",
-              marginLeft: 22,
-              }}
-              >
-              Carbs
-              </Text>
-              </View>
-
-              <View>
-              <Text
-              style={{
-              fontSize: 17,
-              fontWeight: "bold",
-              color: "#F6EFDD",
-              marginLeft: 15,
-              width:20,
-              borderRadius: 10,
-              backgroundColor: "#F6EFDD",
-              paddingVertical: 11,
-               marginLeft: 30
-              }}
-              >
-              T
-              </Text>
-              <Text
-              style={{
-              fontSize: 11,
-              color: "white",
-              marginLeft: 33,
-              }}
-              >
-              Fat
-              </Text>
-              </View>
+          
 
               </View>
               </View>
 
               <Text style={{fontSize: 17, justifyContent: "center", color: "#DAAF53", fontWeight: "bold", marginBottom: 10}}>Meal Suggestion</Text>
-              <View style={{flexDirection: 'row'}}>
-              <View>
-              <Image source={Meal2} style={styles.Image}></Image>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "black",
-              marginRight: 23,
-              }}
-              >
-              Lemon-Garlic Pasta
-              </Text>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "black",
-              marginLeft: 12,
-              }}
-              >
-              with Salmon
-              </Text>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "#EF6160",
-              marginLeft: 12,
-              }}
-              >
-              473 calories
-              </Text>
-              </View>
-
-              <View>
-              <Image source={Meal1} style={styles.Image}></Image>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "black",
-              marginRight: 18,
-
-              }}
-              >
-              Cheese Quesadillas          
-              </Text>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "#EF6160",
-              marginLeft: 12,
-              }}
-              >
-              385 calories
-              </Text>
-              </View>
-
-              <View>
-              <Image source={Meal3} style={styles.Image}></Image>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "black",
               
-              }}
-              >
-              Salmon Sushi Grain
-              </Text>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "black",
-              marginLeft: 30,
-              }}
-              >
-              Bowl
-              </Text>
-              <Text
-              style={{
-              fontSize: 10,
-              color: "#EF6160",
-              marginLeft: 12,
-              }}
-              >
-              432 calories
-              </Text>
-              </View>
-
-              </View>
-
+          <View style={{
+              flex : 1,
+              flexDirection : 'row'
+          }}>
+{suggestion && suggestion.length > 0 ? (
+        <View style={{
+          flex : 1,
+          flexDirection : 'row'
+      }}>
+          {suggestion.slice(0, 3).map((item, index) => (
+            <Item key={index} item={item} />
+          ))}
+        </View>
+      ) : null}
+          </View>
           </View>
           </ScrollView>
-      </Background>
+
   )
 }
 
@@ -388,16 +259,20 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     justifyContent: "center",
   },
-  shadowProp: {
-    shadowColor: "black",
-    shadowOffset: { width: -2, height: 5 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 10,
+  item: {
+
+    textAlign : "center",
+    alignItems : "center",
+    width : 110
   },
-  Image: {
+
+  image: {
     width: 80,
     height: 80,
+    borderRadius : 15,
+    borderColor : "#8EB44F",
+    borderWidth : 2
     // marginRight
-  }
+  },
+ 
 })

@@ -14,11 +14,12 @@ import ForgotScreen from "./screens/ForgotScreen";
 import ScannerScreen from "./screens/ScannerScreen";
 import EntryScreen from "./screens/EntryScreen";
 
+export const ip =  "http://192.168.0.104:5000/"
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [isShowSplash, setIsShowSplash] = useState(true);
-
+  
   // useEffect(() => {
   //   setTimeout(() => {
   //     setIsShowSplash(false);
